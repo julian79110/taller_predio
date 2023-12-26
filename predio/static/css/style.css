@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+}
+body{
+    background-color: rgb(190,190,190);
+}
+.btn:hover{
+    background-color: white;
+    color: black;
+}
+.card{
+    padding: 2px;
+    text-align: center;
+    height: 290px;
+    border-radius: 5%;
+    box-shadow: 9px 7px 15px 1px rgba(0,0,0,0.75);
+}
+b{
+    font-size: 17px;
+}
+.container{
+    background-color: rgb(255,255,255);
+    width: 400px;
+    height: 470px;
+    border-radius: 20px;
+    margin-top: 5%;
+    box-shadow: 9px 7px 15px 1px rgba(0,0,0,0.75);
+}
+.container2{
+    background-color: rgb(255,255,255);
+    width: 400px;
+    height: 700px;
+    border-radius: 20px;
+    margin-top: 3%;
+    box-shadow: 9px 7px 15px 1px rgba(0,0,0,0.75);
+}

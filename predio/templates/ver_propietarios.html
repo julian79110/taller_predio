@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Propietarios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href={% static 'css/style.css' %}>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <section class="fondo">
+        <!--Navbar-->
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Administrar Propietarios</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Administrar Propietarios</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href={% url 'index' %}>Inicio</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Acciones
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-dark">
+                    <li><a class="dropdown-item" href="{% url 'ver_propietarios' %}">Ver Propietarios</a></li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'mostrar_formulario' %}" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                          Registrar Propietario
+                        </a>
+                        </li>
+                  </ul>
+                </li>
+              </ul>
+              
+            </div>
+          </div>
+        </div>
+      </nav>
+
+    <!--Fin Navbar-->
+    <br>
+    <br>
+    <br>
+    <!--inicio del alert-->
+    {% if request.GET.mensaje %}
+  <div class="alert alert-success alert-dismissible fade show m-4" role="alert" id="autoCloseAlert">
+    {{ request.GET.mensaje }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <script>
+    setTimeout(function() {
+      document.getElementById('autoCloseAlert').style.display = 'none';
+    }, 3000);
+  </script>
+{% endif %}
+<!--fin del alert-->
+         <!--cards dinamicas-->
+    <div class="row justify-content-center m-4">
+        {% for p in propietarios%}
+        
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 ">
+          <div class="card mb-4" style="width: 20rem;">
+            <div class="card-body">
+              <h5 class="card-title">Nombre Propietario: {{p.nombrePropietario}}</h5>
+              <h6 class="card-subtitle mb-2 text-body-secondary">Numero Documento: {{p.numeroDocumento}}</h6>
+              <p class="card-text">Tipo Propietario: {{p.tipoPropietario}}<br>Tipo Documento: {{p.tipoDocumento}}</p>
+
+              <button href="#" class="btn btn-danger" onclick="confirmarEliminacion('{{ p.id }}', '{{ p.nombrePropietario }}')">Eliminar</button>
+                <br>
+                <br>
+                <form action="">
+                  {% csrf_token %}
+                  <a href="{% url 'edit_propietario' p.id %}" class="btn btn-success">Editar</a>
+                </form>
+                
+            </div>
+          </div>
+        </div>
+
+        
+        {% endfor %}
+        </div>
+<script>
+          function confirmarEliminacion(propietarioId, propietarioNombre) {
+              Swal.fire({
+                  title: '¿Estás seguro?',
+                  text: `¿Quieres eliminar el usuario "${propietarioNombre}"?`,
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#d33',
+                  cancelButtonColor: '#3085d6',
+                  confirmButtonText: 'Sí, eliminar',
+                  cancelButtonText: 'Cancelar'
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      window.location.href = "{% url 'delete_propietario' 0 %}".replace('0', propietarioId);
+                  }
+              });
+          }
+      </script>
+        <!--fin card dinamica-->
+    </section>
+</body>
+</html>
