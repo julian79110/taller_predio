@@ -87,9 +87,14 @@
                               </select>
                           </div>
                           <div class="form-floating mb-3">
-                            <input name="propietario" type="text" class="form-control" id="floatingInput" placeholder="Escribe El Nombre Del Predio">
-                            <label for="floatingInput">Propietario</label>
-                          </div>
+                            <select class="form-select" aria-label="Default select example" name="propietarios" id="propietario-input">
+                                <option selected disabled>Selecciona al Propietario</option>
+                                {% for propietario in propietarios %}
+                                    <option value="{{ propietario.id }}">{{ propietario.nombrePropietario }}</option>
+                                {% endfor %}
+                            </select>
+                            <div id="propietarios-errors"></div>
+                        </div>
 
                           <input type="submit" class="btn btn-success" value="Guardar Predio"/>
                     </form>
@@ -112,11 +117,11 @@
                 {% for form in forms %}
                   <div class="col-md-12">
                     <label for="inputEmail4" class="form-label">{{ form.label }}</label>
-                    <input type="{{ form.field.widget.input.type }}" name="{{ form.name }}" value="{{form.value}}" class="form-control" id="inputEmail4" placeholder="{{ form.label }}">
+                    {{form}}
                   </div>
                   {{form.errors}}
                 {% endfor %}
-                <div class="col-12 mt-4">
+                <div class="col-12 mt-3">
                   <button type="submit" class="btn btn-success">Actualizar</button>
                   <a href="{% url 'index' %}" class="btn btn-secondary" role="button">Cancelar</a>
                 </div>

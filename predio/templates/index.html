@@ -108,10 +108,14 @@
                   </div>
 
                   <div class="form-floating mb-3">
-                      <input name="propietario" type="text" class="form-control" id="propietario-input" placeholder="Escribe El Nombre Del Predio">
-                      <label for="propietario-input">Propietario</label><br>
-                      <div id="propietario-errors"></div>
-                  </div>
+                    <select class="form-select" aria-label="Default select example" name="propietarios" id="propietario-input">
+                        <option selected disabled>Selecciona al Propietario</option>
+                        {% for propietario in propietarios %}
+                            <option value="{{ propietario.id }}">{{ propietario.nombrePropietario  }}</option>
+                        {% endfor %}
+                    </select>
+                    <div id="propietarios-errors"></div>
+                </div>
 
                   <input type="submit" class="btn btn-success" value="Guardar Predio"/>
               </form>
@@ -178,6 +182,7 @@
 
     <!--cards dinamicas-->
     <div class="row justify-content-center m-4">
+      {% if predios %}
     {% for p in predios%}
     
     <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 ">
@@ -185,11 +190,15 @@
         <div class="card-body">
           <h5 class="card-title">Nombre Predio: {{p.nombre}}</h5>
           <h6 class="card-subtitle mb-2 text-body-secondary">Numero Matricula: {{p.numeroMatricula}}</h6>
-          <p class="card-text">Numero Catastral: {{p.numeroCatastral}}<br>Tipo: {{p.tipo}}<br>Propietario: {{p.propietario}}</p>
-
+          <p class="card-text">Numero Catastral: {{p.numeroCatastral}}<br>Tipo: {{p.tipo}}<br>
+            {% if propietario %}
+            Propietario: {% for propietario in p.propietarios.all %}
+            {{ propietario.nombrePropietario }}
+          {% endfor %}</p>
+            {% else %}
+              Propietario: Sin Propietario <br><br>
+            {% endif %}
             <button href="#" class="btn btn-danger" onclick="confirmarEliminacion('{{ p.id }}', '{{ p.nombre }}')">Eliminar</button>
-          <br>
-
           <br>
           <form action="">
             {% csrf_token %}
@@ -200,6 +209,10 @@
       </div>
     </div>
     {% endfor %}
+      {% else %}
+       <h1>No Hay Predios Registrados <br> <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">Registra Uno Aqui</a></h1>
+    {% endif %}
+    
     </div>
     <script>
       function confirmarEliminacion(predioId, predioNombre) {

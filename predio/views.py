@@ -1,28 +1,27 @@
 from django.shortcuts import render, redirect
 from .models import predio, propietario
-from .editP import createPredio,createPropietario
-from .editP import predioEdit,propietarioEdit
+from .forms import CreatePredioForm,CreatePropietarioForm
+from .forms import PredioEditForm,PropietarioEditForm
 from django.http import JsonResponse
 
 #listar predios
 def index(request):
+    propietarios_creados = propietario.objects.all()
     predios_creados = predio.objects.all()
     print(predios_creados)
-    return render(request,'index.html',{'predios':predios_creados})
+    return render(request,'index.html',{'predios':predios_creados,'propietarios':propietarios_creados})
 
 #crear un predio
 def create_predio(request):
     if request.method == 'POST':
-        form = createPredio(request.POST)
+        form = CreatePredioForm(request.POST)
         if form.is_valid():
-            predioGuardado = predio(
-                nombre=form.cleaned_data['nombre'],
-                numeroCatastral=form.cleaned_data['numeroCatastral'],
-                numeroMatricula=form.cleaned_data['numeroMatricula'],
-                tipo=form.cleaned_data['tipo'],
-                propietario=form.cleaned_data['propietario']
-            )
-            predioGuardado.save()
+            predioGuardado = form.save(commit=False)  # No guardar aún para permitir la manipulación
+            predioGuardado.save()  # Guardar el predio primero
+
+            # Ahora, utiliza el método set() para asignar propietarios al predio
+            predioGuardado.propietarios.set(form.cleaned_data['propietarios'])
+
             return JsonResponse({'success': True})
 
         # Si el formulario no es válido, devuelve los errores en formato JSON
@@ -30,9 +29,10 @@ def create_predio(request):
         return JsonResponse(errors, status=400)
 
     else:
-        form = createPredio()
+        form = CreatePredioForm()
 
     return render(request, 'index.html', {'form': form})
+
 
 #Eliminar Predio
 def delete_predio(request,id):
@@ -42,12 +42,13 @@ def delete_predio(request,id):
 
 #Editar Predio
 def edit_predio(request,id):
+    propietarios_creados = propietario.objects.all()
     predioObtenido= predio.objects.get(id=id)
-    forms = predioEdit(request.POST or None, instance=predioObtenido)
+    forms = PredioEditForm(request.POST or None, instance=predioObtenido)
     if forms.is_valid() and request.POST:
         forms.save()
         return redirect('/?mensaje=Predio Actualizado Exitosamente')
-    return render(request,'edit_predio.html',{'forms':forms})
+    return render(request,'edit_predio.html',{'forms':forms,'propietarios':propietarios_creados})
 
 #Mostrar Formulario Para Registrar Propietario
 def mostrar_formulario(request):
@@ -56,7 +57,7 @@ def mostrar_formulario(request):
 #Crear Propietario
 def create_propietario(request):
     if request.method == 'POST':
-        form = createPropietario(request.POST)
+        form = CreatePropietarioForm(request.POST)
         if form.is_valid():
             propietarioGuardado = propietario(
                 nombrePropietario=form.cleaned_data['nombrePropietario'],
@@ -72,7 +73,7 @@ def create_propietario(request):
         return JsonResponse(errors, status=400)
 
     else:
-        form = createPropietario()
+        form = CreatePropietarioForm()
     return render(request, 'registrar_propietarios.html', {'form': form})
 
 def ver_propietarios(request):
@@ -87,8 +88,12 @@ def delete_propietario(request,id):
 #Editar Propietario
 def edit_propietario(request,id):
     propietarioObtenido= propietario.objects.get(id=id)
-    forms = propietarioEdit(request.POST or None, instance=propietarioObtenido)
+    forms = PropietarioEditForm(request.POST or None, instance=propietarioObtenido)
     if forms.is_valid() and request.POST:
         forms.save()
         return redirect('/ver_propietarios?mensaje=Propietario Actualizado Exitosamente')
     return render(request,'edit_propietario.html',{'forms':forms})
+
+
+
+

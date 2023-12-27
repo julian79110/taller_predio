@@ -25,16 +25,17 @@ b{
 .container{
     background-color: rgb(255,255,255);
     width: 400px;
-    height: 470px;
-    border-radius: 20px;
-    margin-top: 5%;
-    box-shadow: 9px 7px 15px 1px rgba(0,0,0,0.75);
-}
-.container2{
-    background-color: rgb(255,255,255);
-    width: 400px;
-    height: 700px;
+    height: 520px;
     border-radius: 20px;
     margin-top: 3%;
     box-shadow: 9px 7px 15px 1px rgba(0,0,0,0.75);
+}
+
+h1 a{
+    text-decoration: none;
+    color: rgb(0, 13, 197);
+    font-size: 17px;
+}
+h1{
+    text-align: center;
 }
