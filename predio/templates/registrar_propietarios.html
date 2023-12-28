@@ -49,7 +49,7 @@
       </nav>
 
     <!--Fin Navbar-->
-    <br>
+    <br><br>
     <!--inicio del alert-->
     {% if request.GET.mensaje %}
   <div class="alert alert-success alert-dismissible fade show m-4" role="alert" id="autoCloseAlert">
@@ -69,7 +69,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        
+        <h3>Registrar Propietario</h3>
         <form class="col-md-8 g-3" action="{% url 'create_propietario' %}" method="POST" autocomplete="off" id="myForm">
             {% csrf_token %}
 

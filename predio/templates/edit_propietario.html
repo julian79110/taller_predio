@@ -49,7 +49,8 @@
       </nav>
 
     <!--Fin Navbar-->
-
+      <br>
+      <br>
     <!--formulario para edicion de propietarios-->
         <div class="container">
             <div class="row justify-content-center">
@@ -59,7 +60,7 @@
                 {% for form in forms %}
                   <div class="col-md-12">
                     <label for="inputEmail4" class="form-label">{{ form.label }}</label>
-                    <input type="{{ form.field.widget.input.type }}" name="{{ form.name }}" value="{{form.value}}" class="form-control" id="inputEmail4" placeholder="{{ form.label }}">
+                    {{form}}
                   </div>
                   {{form.errors}}
                 {% endfor %}

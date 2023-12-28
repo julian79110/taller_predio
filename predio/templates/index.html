@@ -105,15 +105,15 @@
                           <option value="urbano">Urbano</option>
                       </select>
                       <div id="tipo-errors"></div>
-                  </div>
-
+                  </div><br>
+                  
+                  <label for="propietario-input">Propietarios</label><br>
                   <div class="form-floating mb-3">
-                    <select class="form-select" aria-label="Default select example" name="propietarios" id="propietario-input">
-                        <option selected disabled>Selecciona al Propietario</option>
-                        {% for propietario in propietarios %}
-                            <option value="{{ propietario.id }}">{{ propietario.nombrePropietario  }}</option>
-                        {% endfor %}
-                    </select>
+                    <select class="form-select" aria-label="Default select example" name="propietarios" id="propietario-input" multiple>
+                      {% for propietario in propietarios %}
+                          <option value="{{ propietario.id }}">{{ propietario.nombrePropietario }}</option>
+                      {% endfor %}
+                  </select>
                     <div id="propietarios-errors"></div>
                 </div>
 
@@ -191,14 +191,11 @@
           <h5 class="card-title">Nombre Predio: {{p.nombre}}</h5>
           <h6 class="card-subtitle mb-2 text-body-secondary">Numero Matricula: {{p.numeroMatricula}}</h6>
           <p class="card-text">Numero Catastral: {{p.numeroCatastral}}<br>Tipo: {{p.tipo}}<br>
-            {% if propietario %}
             Propietario: {% for propietario in p.propietarios.all %}
             {{ propietario.nombrePropietario }}
           {% endfor %}</p>
-            {% else %}
-              Propietario: Sin Propietario <br><br>
-            {% endif %}
             <button href="#" class="btn btn-danger" onclick="confirmarEliminacion('{{ p.id }}', '{{ p.nombre }}')">Eliminar</button>
+          <br>
           <br>
           <form action="">
             {% csrf_token %}

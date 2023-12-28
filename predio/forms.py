@@ -26,13 +26,17 @@ class PropietarioEditForm(forms.ModelForm):
             visible.field.widget.attrs['class'] = 'form-control'
 
 class CreatePredioForm(forms.ModelForm):
+    propietarios = forms.ModelMultipleChoiceField(
+        queryset=propietario.objects.all(),
+        widget=forms.SelectMultiple(attrs={'class': 'form-select'}),
+        label="Selecciona al Propietario"
+    )
+
     class Meta:
-        model=predio
-        fields='__all__'
+        model = predio
+        fields = '__all__'
+
     def __init__(self, *args, **kwargs):
-        """
-        se usa para agregar la clase form-control a todos los elementos del form
-        """
         super().__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'

@@ -15,7 +15,7 @@ class tipoNumeroDocumento(models.TextChoices):
     tarjeta_identidad='tarjeta de identidad'
 
 class propietario(models.Model):
-    nombrePropietario=models.CharField(max_length=30,default='sin propietario')
+    nombrePropietario=models.CharField(max_length=30)
     tipoPropietario=models.CharField(max_length=9,choices=tiposPropietario.choices, default=tiposPropietario.natural)
     numeroDocumento=models.CharField(max_length=10, unique=True)
     tipoDocumento=models.CharField(max_length=50, choices=tipoNumeroDocumento.choices, default=tipoNumeroDocumento.cedula)
@@ -27,6 +27,6 @@ class predio(models.Model):
     numeroCatastral=models.CharField(max_length=30,unique=True,default='na')
     numeroMatricula=models.CharField(max_length=30,unique=True,default='na')
     tipo=models.CharField(max_length=6, choices=tipoPredio.choices, default=tipoPredio.urbano)
-    propietarios=models.ManyToManyField(propietario)
+    propietarios=models.ManyToManyField(propietario, blank=True)
     
 
