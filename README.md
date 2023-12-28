@@ -64,7 +64,7 @@ Digitamos la Sentencia: create database predios
 
     ![image](https://github.com/julian79110/taller_predio/assets/128442954/0ff494a4-0bc6-4810-91e8-be24bf7aa49d)
 
-  ## Gracias por la atencion 
+  ## Gracias por la atencion - Julian David Tique Arias
 
 
 
