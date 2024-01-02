@@ -18,13 +18,9 @@
 
     ![image](https://github.com/julian79110/taller_predio/assets/128442954/8201f5d7-4802-4827-8926-c0e029d329f8)
   
-* Primero instalaremos el framework django en caso de no tener instalado django, con el comando: pip install django
+* Ahora procederemos a instalar las dependencias necesarias para ejecutar el proyecto con el comando: pip install -r requirements.txt
 
-    ![image](https://github.com/julian79110/taller_predio/assets/128442954/d2cf1e54-595f-4d5a-bac8-15f53f6a79a3)
-
-* Luego instalaremos la libreria psycopg2 para poder conectarnos a la base de datos del proyecto
-
-    ![image](https://github.com/julian79110/taller_predio/assets/128442954/73a54254-73f3-459d-80c6-b5ddbf778c32)
+  ![image](https://github.com/julian79110/taller_predio/assets/128442954/83525d39-de30-4dba-ab7a-733b89424e87)
 
 * Luego procedemos a crear la base de datos con el gestor de base de datos pgAdmin4 si no lo tiene instalado lo puede encontrar aqui: https://www.postgresql.org/download/
 
