@@ -1,3 +1,5 @@
 from django.contrib import admin
+from predio.models import Propietario, Predio
 
-# Register your models here.
+admin.site.register(Propietario)
+admin.site.register(Predio)

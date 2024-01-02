@@ -1,0 +1,16 @@
+[
+{
+    "model": "dominios.tipopredio",
+    "pk": 2,
+    "fields": {
+        "nombre": "Rural"
+    }
+},
+{
+    "model": "dominios.tipopredio",
+    "pk": 3,
+    "fields": {
+        "nombre": "Urbano"
+    }
+}
+]

@@ -43,7 +43,7 @@
                     <li>
                       <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href={% url 'mostrar_formulario' %}>Administrar Propietarios</a></li>
+                    <li><a class="dropdown-item" href={% url 'ver_propietarios' %}>Administrar Propietarios</a></li>
                   </ul>
                 </li>
               </ul>
@@ -101,15 +101,15 @@
                   <div class="form-floating mb-3">
                       <select class="form-select" aria-label="Default select example" name="tipo" id="tipo-input">
                           <option selected disabled>Tipo De Predio</option>
-                          <option value="rural">Rural</option>
-                          <option value="urbano">Urbano</option>
+                          <option value="2">Rural</option>
+                          <option value="3">Urbano</option>
                       </select>
                       <div id="tipo-errors"></div>
                   </div><br>
                   
                   <label for="propietario-input">Propietarios</label><br>
                   <div class="form-floating mb-3">
-                    <select class="form-select" aria-label="Default select example" name="propietarios" id="propietario-input" multiple>
+                    <select class="form-select" aria-label="Default select example" name="propietarios" id="propietario-input" multiple >
                       {% for propietario in propietarios %}
                           <option value="{{ propietario.id }}">{{ propietario.nombrePropietario }}</option>
                       {% endfor %}
@@ -190,7 +190,7 @@
         <div class="card-body">
           <h5 class="card-title">Nombre Predio: {{p.nombre}}</h5>
           <h6 class="card-subtitle mb-2 text-body-secondary">Numero Matricula: {{p.numeroMatricula}}</h6>
-          <p class="card-text">Numero Catastral: {{p.numeroCatastral}}<br>Tipo: {{p.tipoPredio.get_tipoPredio_display}}<br>
+          <p class="card-text">Numero Catastral: {{p.numeroCatastral}}<br>Tipo: {{p.tipo}}<br>
             Propietario: {% for propietario in p.propietarios.all %}
             {{ propietario.nombrePropietario }}
           {% endfor %}</p>

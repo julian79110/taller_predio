@@ -1,10 +1,10 @@
 from django import forms
-from .models import predio,propietario
+from .models import Predio,Propietario
 
 
 class PredioEditForm(forms.ModelForm):
     class Meta: 
-        model = predio
+        model = Predio
         fields = '__all__'
     def __init__(self, *args, **kwargs):
         """
@@ -16,7 +16,7 @@ class PredioEditForm(forms.ModelForm):
         
 class PropietarioEditForm(forms.ModelForm):
     class Meta: 
-        model = propietario
+        model = Propietario
         fields = '__all__'
     def __init__(self, *args, **kwargs):
         """
@@ -28,13 +28,14 @@ class PropietarioEditForm(forms.ModelForm):
 
 class CreatePredioForm(forms.ModelForm):
     propietarios = forms.ModelMultipleChoiceField(
-        queryset=propietario.objects.all(),
+        queryset=Propietario.objects.all(),
         widget=forms.SelectMultiple(attrs={'class': 'form-select'}),
-        label="Selecciona al Propietario"
+        label="Selecciona al Propietario",
+        required=False
     )
 
     class Meta:
-        model = predio
+        model = Predio
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
@@ -44,7 +45,7 @@ class CreatePredioForm(forms.ModelForm):
 
 class CreatePropietarioForm(forms.ModelForm):
     class Meta:
-        model=propietario
+        model=Propietario
         fields = '__all__'
     def __init__(self, *args, **kwargs):
         """

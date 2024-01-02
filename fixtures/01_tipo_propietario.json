@@ -1,0 +1,16 @@
+[
+{
+    "model": "dominios.tipopropietario",
+    "pk": 1,
+    "fields": {
+        "nombre": "Natural"
+    }
+},
+{
+    "model": "dominios.tipopropietario",
+    "pk": 2,
+    "fields": {
+        "nombre": "Juridico"
+    }
+}
+]

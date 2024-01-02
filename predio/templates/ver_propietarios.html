@@ -76,7 +76,7 @@
             <div class="card-body">
               <h5 class="card-title">Nombre Propietario: {{p.nombrePropietario}}</h5>
               <h6 class="card-subtitle mb-2 text-body-secondary">Numero Documento: {{p.numeroDocumento}}</h6>
-              <p class="card-text">Tipo Propietario: {{p.tipoPropietario}}<br>Tipo Documento: {{p.tipoDocumento.get_tipoDocumento_display}}</p>
+              <p class="card-text">Tipo Propietario: {{p.tipoPropietario}}<br>Tipo Documento: {{p.tipoDocumento}}</p>
 
               <button href="#" class="btn btn-danger" onclick="confirmarEliminacion('{{ p.id }}', '{{ p.nombrePropietario }}')">Eliminar</button>
                 <br>

@@ -1,0 +1,30 @@
+[
+{
+    "model": "dominios.tiponumerodocumento",
+    "pk": 1,
+    "fields": {
+        "nombre": "CC"
+    }
+},
+{
+    "model": "dominios.tiponumerodocumento",
+    "pk": 2,
+    "fields": {
+        "nombre": "TI"
+    }
+},
+{
+    "model": "dominios.tiponumerodocumento",
+    "pk": 3,
+    "fields": {
+        "nombre": "CE"
+    }
+},
+{
+    "model": "dominios.tiponumerodocumento",
+    "pk": 4,
+    "fields": {
+        "nombre": "NT"
+    }
+}
+]
