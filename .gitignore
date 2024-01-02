@@ -1,0 +1,16 @@
+*.pyc
+*.js
+*.css
+__pycache__/
+migrations/
+env/
+*min.css
+*min.js
+*.png
+*.jpg
+css/
+js/
+images/
+*.bak
+*.dat
+*.dir

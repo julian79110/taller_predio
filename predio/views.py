@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import predio, propietario
+from dominios.models import TipoNumeroDocumento
 from .forms import CreatePredioForm,CreatePropietarioForm
 from .forms import PredioEditForm,PropietarioEditForm
 from django.http import JsonResponse
@@ -77,8 +78,9 @@ def create_propietario(request):
     return render(request, 'registrar_propietarios.html', {'form': form})
 
 def ver_propietarios(request):
+    tipo_documento = tipoNumeroDocumento.objects.all()
     propietarios_creados = propietario.objects.all()
-    return render(request,'ver_propietarios.html',{'propietarios':propietarios_creados})
+    return render(request,'ver_propietarios.html',{'propietarios':propietarios_creados,'tipoDocumento':tipo_documento})
 
 def delete_propietario(request,id):
     eliminar_propietario=propietario.objects.get(id=id)

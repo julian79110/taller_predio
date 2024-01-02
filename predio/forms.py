@@ -1,6 +1,7 @@
 from django import forms
 from .models import predio,propietario
 
+
 class PredioEditForm(forms.ModelForm):
     class Meta: 
         model = predio

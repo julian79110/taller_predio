@@ -43,7 +43,7 @@
                     <li>
                       <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href={% url 'mostrar_formulario' %}>Registrar Propietario</a></li>
+                    <li><a class="dropdown-item" href={% url 'mostrar_formulario' %}>Administrar Propietarios</a></li>
                   </ul>
                 </li>
               </ul>
@@ -190,7 +190,7 @@
         <div class="card-body">
           <h5 class="card-title">Nombre Predio: {{p.nombre}}</h5>
           <h6 class="card-subtitle mb-2 text-body-secondary">Numero Matricula: {{p.numeroMatricula}}</h6>
-          <p class="card-text">Numero Catastral: {{p.numeroCatastral}}<br>Tipo: {{p.tipo}}<br>
+          <p class="card-text">Numero Catastral: {{p.numeroCatastral}}<br>Tipo: {{p.tipoPredio.get_tipoPredio_display}}<br>
             Propietario: {% for propietario in p.propietarios.all %}
             {{ propietario.nombrePropietario }}
           {% endfor %}</p>
