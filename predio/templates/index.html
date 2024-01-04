@@ -1,170 +1,7 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predios</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href={% static 'css/style.css' %}>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-</head>
-<body>
-    <section class="fondo">
-    <!--Navbar-->
-    <nav class="navbar navbar-dark bg-dark fixed-top">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Administrar Predios</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Administrar Predios</h5>
-              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href={% url 'index' %}>Inicio</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Acciones
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-dark">
-                    <li><a class="dropdown-item" href={% url 'index' %}>Ver Predios</a></li>
-                    <li>
-                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                          Registrar Predio
-                        </a>
-                        </li>
-                    <li>
-                      <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href={% url 'ver_propietarios' %}>Administrar Propietarios</a></li>
-                  </ul>
-                </li>
-              </ul>
-              
-            </div>
-          </div>
-        </div>
-      </nav>
-      <br>
-      <br>
-      <br>
-    <!--Fin Navbar-->
-
-  <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar Predio</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <form action="{% url 'create_predio' %}" method="post" autocomplete="off" id="myForm">
-                  {% csrf_token %}
-
-                  {% if form.errors %}
-                      <div class="alert alert-danger">
-                          <strong>Error:</strong> Por favor, corrige los siguientes errores.
-                          <ul>
-                              {% for error in form.non_field_errors %}
-                                  <li>{{ error }}</li>
-                              {% endfor %}
-                          </ul>
-                      </div>
-                  {% endif %}
-
-                  <div class="form-floating mb-3">
-                      <input name="nombre" type="text" class="form-control" id="nombre-input" placeholder="Escribe El Nombre Del Predio">
-                      <label for="nombre-input">Nombre Del Predio</label><br>
-                      <div id="nombre-errors"></div>
-                  </div>
-
-                  <div class="form-floating mb-3">
-                      <input name="numeroCatastral" type="text" class="form-control" id="numeroCatastral-input" placeholder="Escribe El Numero Catastral">
-                      <label for="numeroCatastral-input">Numero Catastral</label><br>
-                      <div id="numeroCatastral-errors"></div>
-                  </div>
-
-                  <div class="form-floating mb-3">
-                      <input name="numeroMatricula" type="text" class="form-control" id="numeroMatricula-input" placeholder="Escribe El Nombre Del Predio">
-                      <label for="numeroMatricula-input">Numero De Matricula</label><br>
-                      <div id="numeroMatricula-errors"></div>
-                  </div>
-
-                  <div class="form-floating mb-3">
-                      <select class="form-select" aria-label="Default select example" name="tipo" id="tipo-input">
-                          <option selected disabled>Tipo De Predio</option>
-                          <option value="2">Rural</option>
-                          <option value="3">Urbano</option>
-                      </select>
-                      <div id="tipo-errors"></div>
-                  </div><br>
-                  
-                  <label for="propietario-input">Propietarios</label><br>
-                  <div class="form-floating mb-3">
-                    <select class="form-select" aria-label="Default select example" name="propietarios" id="propietario-input" multiple >
-                      {% for propietario in propietarios %}
-                          <option value="{{ propietario.id }}">{{ propietario.nombrePropietario }}</option>
-                      {% endfor %}
-                  </select>
-                    <div id="propietarios-errors"></div>
-                </div>
-
-                  <input type="submit" class="btn btn-success" value="Guardar Predio"/>
-              </form>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          </div>
-      </div>
-  </div>
-</div>
-<script>
-  $(document).ready(function () {
-    $('#myForm').submit(function (e) {
-      e.preventDefault();
-      $.ajax({
-        type: 'POST',
-        url: '{% url "create_predio" %}',
-        data: $('#myForm').serialize(),
-        success: function (data) {
-          // Manejar el mensaje de éxito si es necesario
-          // Puedes redirigir o realizar otras acciones aquí
-          window.location.href = '{% url "index" %}?mensaje=Predio registrado exitosamente';
-        },
-        error: function (xhr, errmsg, err) {
-          // En caso de errores, mostrar los errores debajo de cada campo
-          var errors = JSON.parse(xhr.responseText);
-
-          // Limpiar los errores previos
-          $('.error').empty();
-
-          // Agregar errores de campos a los elementos correspondientes
-          if ('form_errors' in errors) {
-            $.each(errors.form_errors, function (field, fieldErrors) {
-              $('#' + field + '-errors').html('<div class="error"><strong>Error:</strong> ' + fieldErrors.join(', ') + '</div>');
-            });
-          }
-        },
-        complete: function () {
-          // No cierres la modal automáticamente, déjala abierta
-        }
-      });
-    });
-  });
-</script>
-
-
-<!--Aqui Finaliza la modal-->
-
-
+{% block content %}
+<br><br>
 <!--inicio del alert-->
     {% if request.GET.mensaje %}
   <div class="alert alert-success alert-dismissible fade show m-4" role="alert" id="autoCloseAlert">
@@ -193,15 +30,19 @@
           <p class="card-text">Numero Catastral: {{p.numeroCatastral}}<br>Tipo: {{p.tipo}}<br>
             Propietario: {% for propietario in p.propietarios.all %}
             {{ propietario.nombrePropietario }}
-          {% endfor %}</p>
+          {% endfor %}
+        </p>
+        {% if 'predio.view_propietario' in request.user.get_all_permissions %}
             <button href="#" class="btn btn-danger" onclick="confirmarEliminacion('{{ p.id }}', '{{ p.nombre }}')">Eliminar</button>
+        {% endif %}
           <br>
           <br>
+          {% if 'predio.view_propietario' in request.user.get_all_permissions %}
           <form action="">
             {% csrf_token %}
             <a href="{% url 'edit_predio' p.id %}" class="btn btn-success">Editar</a>
           </form>
-          
+          {% endif %}
         </div>
       </div>
     </div>
@@ -229,8 +70,5 @@
           });
       }
   </script>
-    <!--fin card dinamica-->
-</section>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</body>
-</html>
+  <!--fin de cards dinamicas-->
+{% endblock %}

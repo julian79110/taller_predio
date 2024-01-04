@@ -2,7 +2,6 @@
 *.js
 *.css
 __pycache__/
-migrations/
 env/
 *min.css
 *min.js

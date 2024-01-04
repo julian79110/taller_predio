@@ -1,157 +1,71 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro Propietarios</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href={% static 'css/style.css' %}>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
-    <section class="fondo">
-        <!--Navbar-->
-    <nav class="navbar navbar-dark bg-dark fixed-top">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Administrar Propietarios</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Administrar Propietarios</h5>
-              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href={% url 'index' %}>Inicio</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Acciones
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-dark">
-                    <li><a class="dropdown-item" href="{% url 'ver_propietarios' %}">Ver Propietarios</a></li>
-                    <li>
-                      <a class="dropdown-item" href="{% url 'mostrar_formulario' %}">Registrar Propietarios</a>
-                        </li>
-                  </ul>
-                </li>
-              </ul>
-              
-            </div>
-          </div>
-        </div>
-      </nav>
+{% block content %}    
+<br><br> 
 
-    <!--Fin Navbar-->
-    <br><br>
-    <!--inicio del alert-->
-    {% if request.GET.mensaje %}
-  <div class="alert alert-success alert-dismissible fade show m-4" role="alert" id="autoCloseAlert">
-    {{ request.GET.mensaje }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <!--inicio del alert-->
+     {% if mensaje %}
+     <div class="alert alert-success alert-dismissible fade show m-4" role="alert" id="autoCloseAlert">
+       {{ mensaje }}
+       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+     </div>
+   {% endif %}
+   <!--fin del alert-->
+
+   {% if form.errors %}
+  <div class="alert alert-danger alert-dismissible fade show m-4" role="alert">
+    <strong>Error:</strong> Por favor, corrige los siguientes errores.
+    <ul>
+      {% for error in form.errors.items %}
+        <li>{{ error }}</li>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      {% endfor %}
+    </ul>
   </div>
+    {% endif %}
 
-  <script>
-    setTimeout(function() {
-      document.getElementById('autoCloseAlert').style.display = 'none';
-    }, 3000);
-  </script>
-{% endif %}
-<!--fin del alert-->
-  
-    <!--formulario para propietarios-->
+          <!--formulario para propietarios-->
+      <div class="container">
+          <div class="row justify-content-center">
+              <h3>Registrar Propietario</h3>
+              <form class="col-md-8 g-3" action="{% url 'create_propietario' %}" method="POST" autocomplete="off" id="myForm">
+                  {% csrf_token %}
 
-<div class="container">
-    <div class="row justify-content-center">
-        <h3>Registrar Propietario</h3>
-        <form class="col-md-8 g-3" action="{% url 'create_propietario' %}" method="POST" autocomplete="off" id="myForm">
-            {% csrf_token %}
-
-            {% if form.errors %}
-                <div class="alert alert-danger">
-                    <strong>Error:</strong> Por favor, corrige los siguientes errores.
-                    <ul>
-                        {% for error in form.non_field_errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-            <div>
-                <label for="inputEmail4" class="form-label">Nombre Propietario</label>
-                <input type="text" name="nombrePropietario" value="" class="form-control" id="nombre-input" placeholder="">
-                <div id="nombrePropietario-errors"></div>
-            </div><br>
-            <div>
-                <select class="form-select" aria-label="Default select example" name="tipoPropietario">
-                    <option selected disabled>Tipo Propietario</option>
-                    <option value="1">Natural</option>
-                    <option value="2">Juridico</option>
-                </select>
-                <div id="tipoPropietario-errors"></div>
-            </div><br>
-            <div>
-                <label for="inputEmail4" class="form-label">Numero Documento</label>
-                <input type="text" name="numeroDocumento" value="" class="form-control" id="numero-input" placeholder="">
-                <div id="numeroDocumento-errors"></div>
-            </div>
-            <div><br>
-                <select class="form-select" aria-label="Default select example" name="tipoDocumento">
-                    <option selected disabled>Tipo Documento</option>
-                    <option value="1">Cedula De Ciudadania</option>
-                    <option value="3">Cedula De Extranjeria</option>
-                    <option value="2">Tarjeta De Identidad</option>
-                    <option value="4">Numero De Identificacion Tributaria</option>
-                </select>
-                <div id="tipoDocumento-errors"></div>
-            </div>
-            <div class="col-12 mt-4">
-                <button type="submit" class="btn btn-success">Registrar</button>
-                <a href="{% url 'ver_propietarios' %}" class="btn btn-secondary" role="button">Cancelar</a>
-            </div>
-        </form>
-    </div>
-</div>
-
-<script>
-    $(document).ready(function () {
-        $('#myForm').submit(function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'POST',
-                url: '{% url "create_propietario" %}',
-                data: $('#myForm').serialize(),
-                success: function (data) {
-                    // Manejar el mensaje de éxito si es necesario
-                    // Puedes redirigir o realizar otras acciones aquí
-                    window.location.href = '{% url "mostrar_formulario" %}?mensaje=Usuario registrado exitosamente';
-                },
-                error: function (xhr, errmsg, err) {
-                    // En caso de errores, mostrar los errores debajo de cada campo
-                    var errors = JSON.parse(xhr.responseText);
-
-                    // Limpiar los errores previos
-                    $('.error').empty();
-
-                    // Agregar errores de campos a los elementos correspondientes
-                    if ('form_errors' in errors) {
-                        $.each(errors.form_errors, function (field, fieldErrors) {
-                            $('#' + field + '-errors').html('<div class="error"><strong>Error:</strong> ' + fieldErrors.join(', ') + '</div>');
-                        });
-                    }
-                },
-            });
-        });
-    });
-</script>
-<!--fin del formulario-->
-
-    </section>
-</body> 
-</html>
+                  <div>
+                      <label for="inputEmail4" class="form-label">Nombre Propietario</label>
+                      <input type="text" name="nombrePropietario" value="" class="form-control" id="nombre-input" placeholder="">
+                      <div id="nombrePropietario-errors"></div>
+                  </div><br>
+                  <div>
+                      <select class="form-select" aria-label="Default select example" name="tipoPropietario">
+                          <option selected disabled>Tipo Propietario</option>
+                          <option value="1">Natural</option>
+                          <option value="2">Juridico</option>
+                      </select>
+                      <div id="tipoPropietario-errors"></div>
+                  </div><br>
+                  <div>
+                      <label for="inputEmail4" class="form-label">Numero Documento</label>
+                      <input type="text" name="numeroDocumento" value="" class="form-control" id="numero-input" placeholder="">
+                      <div id="numeroDocumento-errors"></div>
+                  </div>
+                  <div><br>
+                      <select class="form-select" aria-label="Default select example" name="tipoDocumento">
+                          <option selected disabled>Tipo Documento</option>
+                          <option value="1">Cedula De Ciudadania</option>
+                          <option value="3">Cedula De Extranjeria</option>
+                          <option value="2">Tarjeta De Identidad</option>
+                          <option value="4">Numero De Identificacion Tributaria</option>
+                      </select>
+                      <div id="tipoDocumento-errors"></div>
+                  </div>
+                  <div class="col-12 mt-4">
+                      <button type="submit" class="btn btn-success">Registrar</button>
+                      <a href="{% url 'ver_propietarios' %}" class="btn btn-secondary" role="button">Cancelar</a>
+                  </div>
+              </form>
+          </div>
+      </div>
+      <!--fin del formulario-->
+{% endblock %}
+    
