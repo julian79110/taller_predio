@@ -1,7 +1,10 @@
+#django
 from django import forms
+
+#predio
 from .models import Predio,Propietario
 
-
+#Formulario De Edicion Del Predio
 class PredioEditForm(forms.ModelForm):
     class Meta: 
         model = Predio
@@ -14,6 +17,7 @@ class PredioEditForm(forms.ModelForm):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
         
+#Formulario De Edicion Del Propietario
 class PropietarioEditForm(forms.ModelForm):
     class Meta: 
         model = Propietario
@@ -26,6 +30,8 @@ class PropietarioEditForm(forms.ModelForm):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
 
+
+#Formulario De Creacion De Predio
 class CreatePredioForm(forms.ModelForm):
     propietarios = forms.ModelMultipleChoiceField(
         queryset=Propietario.objects.all(),
@@ -43,6 +49,7 @@ class CreatePredioForm(forms.ModelForm):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
 
+#Formulario De Creacion De Propietario
 class CreatePropietarioForm(forms.ModelForm):
     class Meta:
         model=Propietario

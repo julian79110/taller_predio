@@ -1,13 +1,16 @@
+#django
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from .models import Predio, Propietario
+
+#dominios
 from dominios.models import TipoNumeroDocumento
+
+#forms
 from .forms import CreatePredioForm,CreatePropietarioForm
 from .forms import PredioEditForm,PropietarioEditForm
-from django.http import JsonResponse
 
-#permisos
-#herencia
-#include django template
+#modelos
+from .models import Predio, Propietario
 
 #listar predios
 def index(request):

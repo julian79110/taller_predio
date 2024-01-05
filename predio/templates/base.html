@@ -38,7 +38,7 @@
                   <ul class="dropdown-menu dropdown-menu-dark">
                     <li><a class="dropdown-item" href={% url 'index' %}>Ver Predios</a></li>
                     <li>
-                      {% if 'predio.view_propietario' in request.user.get_all_permissions %}
+                      {% if 'predio.add_predio' in request.user.get_all_permissions %}
                         <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
                           Registrar Predio
                         </a>
@@ -47,7 +47,7 @@
                     <li>
                       <hr class="dropdown-divider">
                     </li>
-                    {% if 'predio.view_propietario' in request.user.get_all_permissions %}
+                    {% if 'predio.add_propietario' in request.user.get_all_permissions %}
                     <li><a class="dropdown-item" href={% url 'mostrar_formulario' %}>Registrar Propietarios</a></li>
                     {% endif %}
                     <li><a class="dropdown-item" href={% url 'ver_propietarios' %}>Ver Propietarios</a></li>

@@ -14,11 +14,29 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+#django
 from django.contrib import admin
 from django.urls import path, include
 
+#djangorestframework (creacion de api's)
+from rest_framework import routers
+
+#predio
+from predio.api.views import UserViewSet, PredioViewSet, TipoPredioViewSet, PropietarioViewSet, TipoPropietarioViewSet, TipoNumeroDocumentoViewSet
+
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'predios', PredioViewSet)
+router.register(r'tipopredio', TipoPredioViewSet)
+router.register(r'propietarios', PropietarioViewSet)
+router.register(r'tipopropietario', TipoPropietarioViewSet)
+router.register(r'tipodocumento', TipoNumeroDocumentoViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('predio.urls'))
+    path('', include('predio.urls')),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/v1/', include(router.urls)),
 ]

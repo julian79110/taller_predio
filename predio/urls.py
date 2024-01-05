@@ -1,4 +1,7 @@
+#django
 from django.urls import path
+
+#vistas
 from .views import index, create_predio,delete_predio,edit_predio,mostrar_formulario,create_propietario,ver_propietarios,delete_propietario,edit_propietario
 
 urlpatterns = [

@@ -1,4 +1,7 @@
+#django
 from django.db import models
+
+#dominios
 from dominios.models import TipoNumeroDocumento,TipoPredio,TipoPropietario
 
 class Propietario(models.Model):

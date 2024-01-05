@@ -32,12 +32,12 @@
             {{ propietario.nombrePropietario }}
           {% endfor %}
         </p>
-        {% if 'predio.view_propietario' in request.user.get_all_permissions %}
+        {% if 'predio.delete_propietario' in request.user.get_all_permissions %}
             <button href="#" class="btn btn-danger" onclick="confirmarEliminacion('{{ p.id }}', '{{ p.nombre }}')">Eliminar</button>
         {% endif %}
           <br>
           <br>
-          {% if 'predio.view_propietario' in request.user.get_all_permissions %}
+          {% if 'predio.change_propietario' in request.user.get_all_permissions %}
           <form action="">
             {% csrf_token %}
             <a href="{% url 'edit_predio' p.id %}" class="btn btn-success">Editar</a>
