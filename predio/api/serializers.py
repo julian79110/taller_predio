@@ -23,11 +23,6 @@ class TipoPredioSerializer(serializers.HyperlinkedModelSerializer):
         model = TipoPredio
         fields = '__all__'
 
-class PredioSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Predio
-        fields = '__all__'
-
 class TipoPropietarioSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = TipoPropietario
@@ -43,4 +38,10 @@ class PropietarioSerializer(serializers.HyperlinkedModelSerializer):
     tipoDocumento = TipoNumeroDocumentoSerializer()
     class Meta:
         model = Propietario
+        fields = '__all__'
+
+class PredioSerializer(serializers.HyperlinkedModelSerializer):
+    tipo = TipoPredioSerializer()
+    class Meta:
+        model = Predio
         fields = '__all__'

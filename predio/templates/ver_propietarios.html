@@ -27,12 +27,12 @@
               <h5 class="card-title">Nombre Propietario: {{p.nombrePropietario}}</h5>
               <h6 class="card-subtitle mb-2 text-body-secondary">Numero Documento: {{p.numeroDocumento}}</h6>
               <p class="card-text">Tipo Propietario: {{p.tipoPropietario}}<br>Tipo Documento: {{p.tipoDocumento}}</p>
-              {% if 'predio.view_propietario' in request.user.get_all_permissions %}
+              {% if 'predio.delete_propietario' in request.user.get_all_permissions %}
               <button href="#" class="btn btn-danger" onclick="confirmarEliminacion('{{ p.id }}', '{{ p.nombrePropietario }}')">Eliminar</button>
               {% endif %}
                 <br>
                 <br>
-                {% if 'predio.view_propietario' in request.user.get_all_permissions %}
+                {% if 'predio.change_propietario' in request.user.get_all_permissions %}
                 <form action="">
                   {% csrf_token %}
                   <a href="{% url 'edit_propietario' p.id %}" class="btn btn-success">Editar</a>
@@ -43,7 +43,11 @@
         </div>
         {% endfor %}
         {% else %}
+          {% if 'predio.add_predio' in request.user.get_all_permissions %}
             <h1>No Hay Propietarios Registrados <br> <a href={% url 'mostrar_formulario' %}>Registra Uno Aqui</a></h1>
+          {% else %}
+            <h1>No Hay Registros</h1>
+          {% endif %}
         {% endif %}
         </div>
 <script>

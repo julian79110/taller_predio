@@ -48,7 +48,11 @@
     </div>
     {% endfor %}
       {% else %}
+      {% if 'predio.add_propietario' in request.user.get_all_permissions %}
        <h1>No Hay Predios Registrados <br> <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">Registra Uno Aqui</a></h1>
+      {% else %}
+        <h1>No Hay Registros</h1>
+      {% endif %}
     {% endif %}
     
     </div>
