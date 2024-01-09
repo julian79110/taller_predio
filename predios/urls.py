@@ -23,7 +23,7 @@ from django.urls import path, include
 from rest_framework import routers
 
 #predio
-from predio.api.views import UserViewSet, PredioViewSet, TipoPredioViewSet, PropietarioViewSet, TipoPropietarioViewSet, TipoNumeroDocumentoViewSet
+from predio.api.views import UserViewSet, PredioViewSet, SubirJSONView, TipoPredioViewSet, PropietarioViewSet, TipoPropietarioViewSet, TipoNumeroDocumentoViewSet
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
@@ -34,9 +34,11 @@ router.register(r'propietarios', PropietarioViewSet)
 router.register(r'tipopropietario', TipoPropietarioViewSet)
 router.register(r'tipodocumento', TipoNumeroDocumentoViewSet)
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('predio.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('api/v1/', include(router.urls)),
+    path('api/v1/subir-archivo/', SubirJSONView.as_view(), name='subir-archivo')
 ]

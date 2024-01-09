@@ -5,14 +5,21 @@ from django.contrib.auth.models import User
 from dominios.models import TipoPredio, TipoPropietario, TipoNumeroDocumento
 
 #djangorestframework (creacion de api's)
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+#json 
+import json
 
 #modelos
 from predio.models import Predio, Propietario
 
 #predio
-from predio.api.serializers import UserSerializer, PredioSerializer, TipoPredioSerializer, PropietarioSerializer, TipoPropietarioSerializer, TipoNumeroDocumentoSerializer
+from predio.api.serializers import JSONSerializer, UserSerializer, PredioSerializer, TipoPredioSerializer, PropietarioSerializer, TipoPropietarioSerializer, TipoNumeroDocumentoSerializer
 
+#re
+import re
 
 
 # Uso Del Serializador y hacer acciones de crud.
@@ -39,3 +46,21 @@ class TipoNumeroDocumentoViewSet(viewsets.ModelViewSet):
 class PropietarioViewSet(viewsets.ModelViewSet):
     queryset = Propietario.objects.all()
     serializer_class = PropietarioSerializer
+
+class SubirJSONView(APIView):
+    serializer_class = JSONSerializer
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            archivo_json = serializer.validated_data.get('archivo_json')
+            datos = json.load(archivo_json)
+            if datos == {}:
+                print('datos no disponibles')
+            else: 
+                for item in datos['textoAnotaciones']:
+                    cadena = item
+                    for i in re.findall(r'ESPECIFICACION: [0-9]{3,5}', cadena):
+                        print(i)
+            return Response({"resultado": "cargado con exito!."},status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
