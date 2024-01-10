@@ -54,13 +54,17 @@ class SubirJSONView(APIView):
         if serializer.is_valid():
             archivo_json = serializer.validated_data.get('archivo_json')
             datos = json.load(archivo_json)
-            if datos == {}:
-                print('datos no disponibles')
-            else: 
-                for item in datos['textoAnotaciones']:
-                    cadena = item
-                    for i in re.findall(r'ESPECIFICACION: [0-9]{3,5}', cadena):
-                        print(i)
-            return Response({"resultado": "cargado con exito!."},status=status.HTTP_200_OK)
+            #crear otro anotaciones para especificaciones
+            #comprension de listas 
+            #enumerate
+            respuesta=[]
+            cadena_anotaciones = str(datos['textoAnotaciones'])
+            anotaciones = re.findall(r'ANOTACION: Nro [0-9]{1,3}', cadena_anotaciones)
+            cadena_especificaciones = str(datos['textoAnotaciones'])
+            especificaciones= re.findall(r'ESPECIFICACION: [0-9]{3,5}', cadena_especificaciones)
+            listas = zip(anotaciones,especificaciones)
+            anotacion_index = [(index, item) for index, item in enumerate(listas, start=1)]
+            respuesta.append(anotacion_index)
+            return Response({"resultado": "cargado con exito!.","respuesta=":respuesta},status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
