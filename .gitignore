@@ -13,3 +13,4 @@ images/
 *.bak
 *.dat
 *.dir
+.env
